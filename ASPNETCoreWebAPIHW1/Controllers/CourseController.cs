@@ -21,20 +21,21 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         [HttpGet("")]
         public ActionResult<IEnumerable<Course>> GetCourse()
         {
-           return this.DB.Course.ToList();
+           return this.DB.Course.Where(d => d.IsDeleted == null || d.IsDeleted == false).ToList();
         }
 
         // GET api/course/5
         [HttpGet("{id}")]
         public ActionResult<Course> GetCourseById(int id)
         {
-            return this.DB.Course.Find(id);
+            return this.DB.Course.Where(d => (d.IsDeleted == null || d.IsDeleted == false)&&d.CourseId==id).FirstOrDefault();
         }
 
         // POST api/course
         [HttpPost("")]
         public void Poststring(Course value)
         {
+            value.DateModified=DateTime.Now;
             this.DB.Course.Add(value);
             this.DB.SaveChanges();
         }
@@ -43,6 +44,7 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         [HttpPut("{id}")]
         public void PutCourse(int id, Course value)
         {
+            value.DateModified=DateTime.Now;
             this.DB.Course.Update(value);
             this.DB.SaveChanges();
         }
@@ -52,9 +54,13 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         public void DeleteCourseById(int id)
         {
             var t = this.DB.Course.Find(id);
+            t.DateModified=DateTime.Now;
+            t.IsDeleted = true;
             this.DB.Remove(t);
             this.DB.SaveChanges();
         }
+
+
 
         // db view  VwCourseStudentCount
         // GET api/vwcoursestudentcount

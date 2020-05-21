@@ -21,20 +21,21 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         [HttpGet("")]
         public ActionResult<IEnumerable<Person>> GetPerson()
         {
-            return this.DB.Person.ToList();
+            return this.DB.Person.Where(d => d.IsDeleted == null || d.IsDeleted == false).ToList();
         }
 
         // GET api/person/5
         [HttpGet("{id}")]
         public ActionResult<Person> GetPersonById(int id)
         {
-           return this.DB.Person.Find(id);
+           return this.DB.Person.Where(d => (d.IsDeleted == null || d.IsDeleted == false)&&d.Id==id).FirstOrDefault();
         }
 
         // POST api/person
         [HttpPost("")]
         public void PostPerson(Person value)
         {
+            value.DateModified=DateTime.Now;
             this.DB.Person.Add(value);
             this.DB.SaveChanges();
         }
@@ -43,6 +44,7 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         [HttpPut("{id}")]
         public void PutPerson(int id, Person value)
         {
+            value.DateModified=DateTime.Now;
             this.DB.Person.Update(value);
             this.DB.SaveChanges();
         }
@@ -51,8 +53,10 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         [HttpDelete("{id}")]
         public void DeletePersonById(int id)
         {
-            var p = this.DB.Person.Find(id);
-            this.DB.Remove(p);
+            var t = this.DB.Person.Find(id);
+            t.DateModified=DateTime.Now;
+            t.IsDeleted = true;
+            this.DB.Remove(t);
             this.DB.SaveChanges();
         }
     }

@@ -21,20 +21,21 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         [HttpGet("")]
         public ActionResult<IEnumerable<Department>> GetDepartment()
         {
-            return this.DB.Department.ToList();
+            return this.DB.Department.Where(d => d.IsDeleted == null || d.IsDeleted == false).ToList();
         }
 
         // GET api/department/5
         [HttpGet("{id}")]
         public ActionResult<Department> GetDepartmentById(int id)
         {
-            return this.DB.Department.Find(id);
+            return this.DB.Department.Where(d => (d.IsDeleted == null || d.IsDeleted == false)&&d.DepartmentId==id).FirstOrDefault();
         }
 
         // POST api/department
         [HttpPost("")]
         public void PostDepartment(Department value)
         {
+            value.DateModified=DateTime.Now;
             this.DB.Department.Add(value);
             this.DB.SaveChanges();
         }
@@ -43,6 +44,7 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         [HttpPut("{id}")]
         public void PutDepartment(int id, Department value)
         {
+            value.DateModified=DateTime.Now;
             this.DB.Department.Update(value);
             this.DB.SaveChanges();
         }
@@ -52,6 +54,8 @@ namespace ASPNETCoreWebAPIHW1.Controllers
         public void DeleteDepartmentById(int id)
         {
             var t = this.DB.Department.Find(id);
+            t.DateModified=DateTime.Now;
+            t.IsDeleted = true;
             this.DB.Remove(t);
             this.DB.SaveChanges();
         }

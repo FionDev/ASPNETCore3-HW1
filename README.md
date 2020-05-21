@@ -17,7 +17,7 @@
 ## step 1: ContosoUniversity DB
 建立DB並匯入資料
 ## step 2: Using EF Core Power Tools 
- 透過EF Core Power Tools對ContosoUniversity DB建立 EF Core 實體資料模型
+ 建立ASPNETCoreHW1_DBFirst專案,透過EF Core Power Tools對ContosoUniversity DB建立 EF Core 實體資料模型
 
 ## step 3: Using NET Core CLI to build ASP NET Core Project 
 * 建立ASPNETCoreWebAPIHW1專案
@@ -29,7 +29,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.4
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 3.1.4
 code .
 ```
- * 把step1中建立在Models下檔案整個資料夾複製搬動到ASPNETCoreWebAPIHW1內
+ * 把建立在Models下檔案整個資料夾複製搬動到ASPNETCoreWebAPIHW1內
  ```bat
 dotnet ef migrations add init
 dotnet ef database update -v
