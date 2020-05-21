@@ -38,10 +38,7 @@ dotnet ef database update -v
 ## step 4: Git
 * 建立Git版控,增加.gitignore
 
-## step 5: CRUD
-* 編輯CRUD Code
-
-## step 6: EF Core Migration Update
+## step 5: EF Core Migration Update
 * 修改 Course, Department, Person 表格，新增 DateModified 欄位(datetime)
 ```dash
 cd ASPNETCoreWebAPIHW1
@@ -57,3 +54,6 @@ dotnet ef migrations add addIsDeleted
 dotnet ef migrations script addIsDeleted
 dotnet ef database update addIsDeleted
 ```
+
+## step 6: CRUD
+* 編輯CRUD Code
