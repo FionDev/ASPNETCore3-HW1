@@ -34,7 +34,8 @@ namespace ASPNETCoreWebAPIHW1
              options
              .UseLoggerFactory(MyLoggerFactory)
              .UseSqlServer(Configuration.GetConnectionString("ContosouniversityConn")));
-            services.AddControllers();
+             
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
