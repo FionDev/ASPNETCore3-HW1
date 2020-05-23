@@ -17,6 +17,9 @@ namespace ASPNETCoreWebAPIHW1
 {
     public class Startup
     {
+         public static readonly ILoggerFactory MyLoggerFactory=LoggerFactory.Create(build=>{
+            build.AddConsole();
+        });
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,7 +31,9 @@ namespace ASPNETCoreWebAPIHW1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ContosouniversityContext>(options =>
-             options.UseSqlServer(Configuration.GetConnectionString("ContosouniversityConn")));
+             options
+             .UseLoggerFactory(MyLoggerFactory)
+             .UseSqlServer(Configuration.GetConnectionString("ContosouniversityConn")));
             services.AddControllers();
         }
 
