@@ -35,7 +35,8 @@ namespace ASPNETCoreWebAPIHW1
              .UseLoggerFactory(MyLoggerFactory)
              .UseSqlServer(Configuration.GetConnectionString("ContosouniversityConn")));
              
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers();//預設使用System.Text.Json
+            //services.AddControllers().AddNewtonsoftJson();//使用 .NET Core 3.1 內建的 System.Text.Json 命名空間處理 JSON 序列化
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
