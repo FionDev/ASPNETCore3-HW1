@@ -55,6 +55,22 @@ namespace ASPNETCoreWebAPIHW1.Controllers
             return department.Course.ToList();
         }
 
+        //使用【明確載入】關聯資料的方法
+        // GET: api/departments/5/courses
+        [HttpGet("{id}/courses")]
+        public async Task<ActionResult<IList<Course>>> GetDepartmentCourses2(int id)
+        {
+            var department = await _context.Department.FindAsync(id);
+
+            if (department == null)
+            {
+                return NotFound();
+            }
+
+            _context.Entry(department).Collection(p => p.Course).Load();
+
+            return department.Course.ToList();
+        }
         // PUT: api/Department/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
